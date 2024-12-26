@@ -1,0 +1,40 @@
+stages:
+  - validate
+  - plan
+  - apply
+  - destroy
+image: 
+   name: hashicorp/terraform:1.6.6
+   entrypoint:
+    - 'usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+before_script:
+  - export AWS_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
+  - export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+  - rm -rf .terraform
+  - terraform init
+
+validate: 
+  stage: validate
+  script: 
+    - echo "This is  Validation stage"
+    - terraform validate
+ 
+plan:
+  stage: plan
+  script :
+    - echo "This is terraform plan stage"
+    - terraform plan
+
+apply:
+  stage: apply
+  script: 
+    - echo "This is terraform apply stage"
+    - terraform apply --auto-approve
+
+destroy:
+  stage: destroy
+  when: manual
+  script: 
+    - echo "This is terraform apply stage"
+    - terraform destroy --auto-approve
