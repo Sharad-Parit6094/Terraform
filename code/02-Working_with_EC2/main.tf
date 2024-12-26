@@ -9,13 +9,14 @@ terraform {
 }
 provider "aws" {
   region = "ap-south-1"
-  profile = "<profile_name>"
+  profile = "terraform"
 }
 
 # Create an EC2 instance
 resource "aws_instance" "example" {
-  ami           = "ami-0b41f7055516b991a"
-  instance_type = "t2.small"
+  ami           = "ami-0fd05997b4dff7aac"
+  instance_type = "t2.micro"
+  key_name = "PuneKey"
   tags = {
     "Name" = "My instance"
   }
